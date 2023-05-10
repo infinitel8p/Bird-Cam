@@ -2,8 +2,8 @@ import imutils
 import cv2
 import datetime
 
-url = ''
-cap = cv2.VideoCapture(url)
+url = ""
+cap = cv2.VideoCapture(0)
 
 # Create a background subtractor object
 bs = cv2.createBackgroundSubtractorMOG2()
@@ -13,8 +13,12 @@ first_frame = None
 recording = False
 
 # Initialize the video writer
-fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+fourcc = cv2.VideoWriter_fourcc(*"mp4v")
 out = None
+
+# Initialize a timer for no motion detection
+no_motion_count = 0
+NO_MOTION_TIMEOUT = 50
 
 while True:
     ret, frame = cap.read()
@@ -22,8 +26,8 @@ while True:
     if not ret:
         break
 
-    # Resize the frame to a width of 500 pixels
-    frame = imutils.resize(frame, width=1000)
+    # Resize the frame to a width of 1000 pixels
+    # frame = imutils.resize(frame, width=1000)
 
     # Apply background subtraction
     fgmask = bs.apply(frame)
@@ -33,8 +37,9 @@ while True:
     fgmask = cv2.dilate(fgmask, None, iterations=2)
 
     # Find contours in the foreground mask
-    contours = cv2.findContours(fgmask.copy(), cv2.RETR_EXTERNAL,
-                                cv2.CHAIN_APPROX_SIMPLE)
+    contours = cv2.findContours(
+        fgmask.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
+    )
     contours = imutils.grab_contours(contours)
 
     # Loop over the contours
@@ -54,23 +59,32 @@ while True:
             recording = True
 
             # Create a video writer object
-            timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+            timestamp = datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
             out = cv2.VideoWriter(
-                f'{timestamp}.mp4', fourcc, 20.0, (frame.shape[1], frame.shape[0]), True)
+                f"{timestamp}.mp4", fourcc, 20.0, (frame.shape[1], frame.shape[0]), True
+            )
 
         # If recording is in progress, write the frame to the video file
         else:
             out.write(frame)
 
-    # If no motion is detected and recording is in progress, stop recording
+            # Reset the no motion timer
+            no_motion_count = 0
+
+    # If no motion is detected and recording is in progress, start the no motion timer
     if not contours and recording:
-        out.release()
-        recording = False
+        no_motion_count += 1
+
+        # If the no motion timeout is reached, stop the recording
+        if no_motion_count >= NO_MOTION_TIMEOUT:
+            out.release()
+            recording = False
+            print("Recording stopped")
 
     # Display the resulting frame
-    cv2.imshow('frame', frame)
+    cv2.imshow("frame", frame)
 
-    if cv2.waitKey(1) == ord('q'):
+    if cv2.waitKey(1) == ord("q"):
         break
 
 # Release the video capture and writer objects

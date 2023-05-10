@@ -1,4 +1,3 @@
-import imutils
 import cv2
 import datetime
 import time

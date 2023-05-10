@@ -3,7 +3,7 @@ import cv2
 import datetime
 
 url = ""
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(1)
 
 # Create a background subtractor object
 bs = cv2.createBackgroundSubtractorMOG2()

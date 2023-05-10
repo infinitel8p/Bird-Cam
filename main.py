@@ -60,17 +60,18 @@ while True:
 
         # If recording is in progress, write the frame to the video file
         else:
-            out.write(frame)
+            if out is not None:
+                out.write(frame)
 
             # Reset the no motion timer
             last_motion_time = time.time()
 
     # If no motion is detected and recording is in progress, start the no motion timer
-    if not contours and recording:
+    if not contours and recording and out is not None:
         out.write(frame)
 
         # Check if the no motion timeout has been reached
-        if time.time() - last_motion_time >= NO_MOTION_TIMEOUT:
+        if time.time() - last_motion_time >= NO_MOTION_TIMEOUT and out is not None:
             out.release()
             recording = False
             print("Recording stopped")
@@ -83,7 +84,7 @@ while True:
 
 # Release the video capture and writer objects
 cap.release()
-if recording:
+if recording and out is not None:
     out.release()
 
 cv2.destroyAllWindows()

@@ -4,7 +4,7 @@ import time
 import threading
 
 url = ""
-cap = cv2.VideoCapture(1)
+cap = cv2.VideoCapture(0)
 
 # Create a background subtractor object
 bs = cv2.createBackgroundSubtractorMOG2()
@@ -27,7 +27,7 @@ start_recording = False
 
 
 def detect_motion():
-    global motion_detected
+    global motion_detected, frame
     while True:
         ret, frame = cap.read()
 
@@ -57,7 +57,7 @@ def detect_motion():
 
 
 def record_video():
-    global recording, start_recording, out, first_frame, last_motion_time
+    global recording, start_recording, out, first_frame, last_motion_time, frame
 
     while True:
         # Check if motion is detected and recording is not in progress

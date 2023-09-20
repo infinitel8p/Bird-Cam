@@ -86,4 +86,4 @@ If you'd like to contribute to this project, please follow these guidelines:
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE). Please see the `LICENSE` file for more details.
+This project is licensed under the [MIT License](../LICENSE). Please see the `LICENSE` file for more details.

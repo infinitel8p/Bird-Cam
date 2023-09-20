@@ -69,8 +69,7 @@ sudo apt-get install hostapd dnsmasq
 - Add the following to the bottom of the file, save, and exit:
   ```bash
   interface wlan0
-     static ip_address=192.168.4.1/24
-     nohook wpa_supplicant
+  static ip_address=192.168.4.1/24
   ```
 
 #### 5. IP Forwarding and Internet Sharing:

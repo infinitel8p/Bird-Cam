@@ -1,39 +1,43 @@
 import bluetooth
 import picamera
 import time
+from datetime import datetime
 
-# Your smartphone's Bluetooth address (replace with your actual address)
-TARGET_BT_ADDRESS = "XX:XX:XX:XX:XX:XX"
+# List of smartphone Bluetooth addresses (replace with your actual addresses)
+TARGET_BT_ADDRESSES = ["XX:XX:XX:XX:XX:XX", "YY:YY:YY:YY:YY:YY"]  # Add more addresses as needed
 
 # Initialize the camera
 camera = picamera.PiCamera()
 
+# Generate a filename based on the current date and time
+filename = datetime.now().strftime('%Y-%m-%d_%H-%M-%S.h264')
+
 # Start recording
-camera.start_recording('video.h264')
+camera.start_recording(filename)
 recording = True
 
-def is_connected(bt_addr):
-    """Check if the given Bluetooth address is connected."""
-    status = bluetooth.lookup_name(bt_addr, timeout=5)
-    if status:
-        return True
+def is_any_connected(bt_addresses):
+    """Check if any of the given Bluetooth addresses are connected."""
+    for addr in bt_addresses:
+        status = bluetooth.lookup_name(addr, timeout=5)
+        if status:
+            return True
     return False
 
 try:
     while True:
-        # Check if your smartphone's Bluetooth address is connected
-        if is_connected(TARGET_BT_ADDRESS):
+        # Check if any of the smartphones' Bluetooth addresses are connected
+        if is_any_connected(TARGET_BT_ADDRESSES):
             if recording:
-                print("Connected to smartphone. Pausing recording.")
+                print("Connected to a smartphone. Pausing recording.")
                 camera.wait_recording(0)  # Pause recording
                 recording = False
         else:
             if not recording:
-                print("Smartphone disconnected. Resuming recording.")
+                print("No smartphones connected. Resuming recording.")
                 camera.wait_recording()  # Resume recording
                 recording = True
 
-        # Wait for a short duration before checking again
         print("Waiting for 5 seconds before checking again...")
         time.sleep(5)
 

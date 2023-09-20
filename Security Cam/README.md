@@ -66,6 +66,7 @@ Once the script is running, the Raspberry Pi will start recording video. The rec
 
 ## Future Enhancements
 
+- **WIFI Detection**: Integration with WIFI to allow user to use bluetooth or WIFI to trigger recording.
 - **Web Interface**: A user-friendly interface to start/stop recording and view recorded videos.
 - **Magnetic Reed Switch**: Integration with a magnetic reed switch to detect door open/close events and trigger recording accordingly.
 

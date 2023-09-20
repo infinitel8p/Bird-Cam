@@ -4,7 +4,7 @@ import time
 from datetime import datetime
 
 # List of smartphone Bluetooth addresses (replace with your actual addresses)
-TARGET_BT_ADDRESSES = ["XX:XX:XX:XX:XX:XX", "YY:YY:YY:YY:YY:YY"]  # Add more addresses as needed
+TARGET_BT_ADDRESSES = ["XX:XX:XX:XX:XX:XX"]  # Add more addresses as needed in this format: ["XX:XX:XX:XX:XX:XX", "YY:YY:YY:YY:YY:YY"]
 
 # Initialize the camera
 camera = picamera.PiCamera()

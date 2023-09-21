@@ -44,3 +44,23 @@ try:
 except KeyboardInterrupt:
     camera.stop_recording()
     camera.close()
+
+"""
+def is_in_ap_mode():
+    # This checks if the wlan0 interface has the IP 192.168.4.1 which is set when in AP mode.
+    try:
+        output = subprocess.check_output("ip addr show wlan0 | grep '192.168.4.1'", shell=True).decode('utf-8').strip()
+        return bool(output)
+    except Exception:
+        return False
+"""
+
+"""
+def is_device_connected_to_ap():
+    try:
+        # This checks the dnsmasq.leases file for any leases, indicating a device is connected.
+        output = subprocess.check_output("cat /var/lib/misc/dnsmasq.leases", shell=True).decode('utf-8').strip()
+        return bool(output)
+    except Exception:
+        return False
+"""

@@ -1,8 +1,9 @@
+> [!IMPORTANT]
+> The Project has moved to https://github.com/infinitel8p/Security-Cam where a more advanced version with dashboard and other features is in the works.
+
 # Bird Cam
 
 This is a simple Python script for a action cam that records the birds arriving at a feeding station on my balcony. The script is like a security cam that records video when it detects movement. The recorded videos are saved in MP4 format.
-
-The Project has moved to https://github.com/infinitel8p/Security-Cam where a more advanced version with dashboard and other features is in the works.
 
 ## Requirements
 
